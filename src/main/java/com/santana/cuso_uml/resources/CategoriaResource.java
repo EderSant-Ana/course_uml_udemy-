@@ -3,12 +3,15 @@ package com.santana.cuso_uml.resources;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.santana.cuso_uml.domain.Categoria;
+import com.santana.cuso_uml.services.CategoriaService;
 
 @RestController
 @RequestMapping(value="/categorias")
@@ -19,6 +22,9 @@ public class CategoriaResource {
 //		return "Rest está funcionando!";
 //	}
 	
+	@Autowired
+	private CategoriaService categoriaService;
+	
 	@GetMapping
 	public ResponseEntity<List<Categoria>> listar(){
 		Categoria cat1 = new Categoria(1, "Informática");
@@ -27,7 +33,15 @@ public class CategoriaResource {
 		List<Categoria> list = new ArrayList<>();
 		list.add(cat1);
 		list.add(cat2);
-		
 		return ResponseEntity.ok().body(list);
 	}
+	
+	@GetMapping("/{id}")
+	public ResponseEntity<Categoria> find(@PathVariable Integer id){
+				
+		Categoria obj = categoriaService.buscar(id);
+		return ResponseEntity.ok().body(obj);
+	}
+	
+
 }
