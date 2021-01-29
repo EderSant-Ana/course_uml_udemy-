@@ -1,8 +1,5 @@
 package com.santana.cuso_uml.resources;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,20 +18,20 @@ public class CategoriaResource {
 //	public String listar() {
 //		return "Rest está funcionando!";
 //	}
+
+//	@GetMapping
+//	public ResponseEntity<List<Categoria>> listar(){
+//		Categoria cat1 = new Categoria(1, "Informática");
+//		Categoria cat2 = new Categoria(2, "Escritório");
+//		
+//		List<Categoria> list = new ArrayList<>();
+//		list.add(cat1);
+//		list.add(cat2);
+//		return ResponseEntity.ok().body(list);
+//	}	
 	
 	@Autowired
 	private CategoriaService categoriaService;
-	
-	@GetMapping
-	public ResponseEntity<List<Categoria>> listar(){
-		Categoria cat1 = new Categoria(1, "Informática");
-		Categoria cat2 = new Categoria(2, "Escritório");
-		
-		List<Categoria> list = new ArrayList<>();
-		list.add(cat1);
-		list.add(cat2);
-		return ResponseEntity.ok().body(list);
-	}
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<Categoria> find(@PathVariable Integer id){
