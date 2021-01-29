@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import com.santana.cuso_uml.domain.Categoria;
 import com.santana.cuso_uml.repositories.CategoriaRepository;
+import com.santana.cuso_uml.services.exceptions.ObjectNotFoundException;
+
 
 @Service
 public class CategoriaService {
@@ -15,12 +17,14 @@ public class CategoriaService {
 	@Autowired
 	private CategoriaRepository categoriaRepository;
 	
-	public Categoria buscar(Integer id) {
+	public Categoria buscar(Integer id)  {
 		Optional<Categoria> obj = categoriaRepository.findById(id);
-		return obj.orElse(null);
+		return obj.orElseThrow(() -> new ObjectNotFoundException(			
+				"Objeto não encontrado! Id: " + id + ", Tipo: " + Categoria.class.getName()));
 	}
 
 	public List<Categoria> listar() {
-		return categoriaRepository.findAll();
+		List<Categoria> list = categoriaRepository.findAll();
+		return list;
 	}
 }
