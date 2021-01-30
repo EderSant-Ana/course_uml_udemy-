@@ -33,6 +33,7 @@ public class Cliente  implements Serializable{
 	@OneToMany(mappedBy="cliente")
 	private List<Endereco> enderecos = new ArrayList<>();
 	
+
 	@ElementCollection
 	@CollectionTable(name="tb_telefone")
 	private Set<String> telefones = new HashSet<>();
