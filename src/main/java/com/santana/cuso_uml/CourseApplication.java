@@ -13,6 +13,7 @@ import com.santana.cuso_uml.domain.Cidade;
 import com.santana.cuso_uml.domain.Cliente;
 import com.santana.cuso_uml.domain.Endereco;
 import com.santana.cuso_uml.domain.Estado;
+import com.santana.cuso_uml.domain.ItemPedido;
 import com.santana.cuso_uml.domain.PagamentoComBoleto;
 import com.santana.cuso_uml.domain.PagamentoComCartao;
 import com.santana.cuso_uml.domain.Pedido;
@@ -24,6 +25,7 @@ import com.santana.cuso_uml.repositories.CidadeRepository;
 import com.santana.cuso_uml.repositories.ClienteRepository;
 import com.santana.cuso_uml.repositories.EnderecoRepository;
 import com.santana.cuso_uml.repositories.EstadoRepository;
+import com.santana.cuso_uml.repositories.ItemPedidoRepository;
 import com.santana.cuso_uml.repositories.PagamentoRepository;
 import com.santana.cuso_uml.repositories.PedidoRepository;
 import com.santana.cuso_uml.repositories.ProdutoRepository;
@@ -47,6 +49,8 @@ public class CourseApplication implements CommandLineRunner{
 	private PedidoRepository pedidoRepository;
 	@Autowired
 	private PagamentoRepository pagamentoRepository;
+	@Autowired
+	private ItemPedidoRepository itemPedidoRepository;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(CourseApplication.class, args);
@@ -113,6 +117,20 @@ public class CourseApplication implements CommandLineRunner{
 		
 		pedidoRepository.saveAll(Arrays.asList(ped1, ped2));
 		pagamentoRepository.saveAll(Arrays.asList(pagto1, pagto2));
+		
+		ItemPedido ip1 = new ItemPedido(ped1, p1, 0.00, 1, 2000.00);
+		ItemPedido ip2 = new ItemPedido(ped1, p3, 0.00, 2, 80.00);
+		ItemPedido ip3 = new ItemPedido(ped2, p2, 100.00, 1, 800.00);
+		
+		p1.getItens().addAll(Arrays.asList(ip1));
+		p2.getItens().addAll(Arrays.asList(ip3));
+		p3.getItens().addAll(Arrays.asList(ip2));
+		
+		ped1.getItens().addAll(Arrays.asList(ip1, ip2));
+		ped2.getItens().addAll(Arrays.asList(ip3));
+		
+		itemPedidoRepository.saveAll(Arrays.asList(ip1, ip2, ip3));
+
 		
 	}
 
